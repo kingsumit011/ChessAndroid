@@ -1,19 +1,17 @@
-import 'package:chess_app/constants/app_theme.dart';
-import 'package:chess_app/constants/strings.dart';
-import 'package:chess_app/data/repository.dart';
-import 'package:chess_app/di/components/service_locator.dart';
-import 'package:chess_app/utils/routes/routes.dart';
-import 'package:chess_app/stores/language/language_store.dart';
-import 'package:chess_app/stores/post/post_store.dart';
-import 'package:chess_app/stores/theme/theme_store.dart';
-import 'package:chess_app/stores/user/user_store.dart';
-import 'package:chess_app/ui/home/home.dart';
-import 'package:chess_app/ui/login/login.dart';
-import 'package:chess_app/utils/locale/app_localization.dart';
+import 'package:chess/constants/app_theme.dart';
+import 'package:chess/constants/strings.dart';
+import 'package:chess/data/repository.dart';
+import 'package:chess/di/components/service_locator.dart';
+import 'package:chess/stores/language/language_store.dart';
+import 'package:chess/stores/post/post_store.dart';
+import 'package:chess/stores/theme/theme_store.dart';
+import 'package:chess/utils/locale/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+
+import '../utils/Navigation/routes.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -22,7 +20,8 @@ class MyApp extends StatelessWidget {
   final ThemeStore _themeStore = ThemeStore(getIt<Repository>());
   final PostStore _postStore = PostStore(getIt<Repository>());
   final LanguageStore _languageStore = LanguageStore(getIt<Repository>());
-  final UserStore _userStore = UserStore(getIt<Repository>());
+
+  // final _userStore = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +38,13 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: Strings.appName,
             theme: _themeStore.darkMode ? themeDataDark : themeData,
+            initialRoute: Routes.splash,
             routes: Routes.routes,
             locale: Locale(_languageStore.locale),
             supportedLocales: _languageStore.supportedLanguages
                 .map((language) => Locale(language.locale!, language.code))
                 .toList(),
-            localizationsDelegates: [
+            localizationsDelegates: const [
               // A class which loads the translations from JSON files
               AppLocalizations.delegate,
               // Built-in localization of basic text for Material widgets
@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
               // Built-in localization of basic text for Cupertino widgets
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: _userStore.isLoggedIn ? HomeScreen() : LoginScreen(),
+            // home: _userStore != null ? HomeScreen() : LoginScreen(),
+            // home: SplashScreen(),
           );
         },
       ),

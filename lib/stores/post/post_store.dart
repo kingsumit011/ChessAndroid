@@ -1,7 +1,7 @@
-import 'package:chess_app/data/repository.dart';
-import 'package:chess_app/models/post/post_list.dart';
-import 'package:chess_app/stores/error/error_store.dart';
-import 'package:chess_app/utils/dio/dio_error_util.dart';
+import 'package:chess/data/repository.dart';
+import 'package:chess/models/post/post_list.dart';
+import 'package:chess/stores/error/error_store.dart';
+import 'package:chess/utils/dio/dio_error_util.dart';
 import 'package:mobx/mobx.dart';
 
 part 'post_store.g.dart';

@@ -1,16 +1,17 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:chess_app/data/sharedpref/constants/preferences.dart';
-import 'package:chess_app/utils/routes/routes.dart';
-import 'package:chess_app/stores/language/language_store.dart';
-import 'package:chess_app/stores/post/post_store.dart';
-import 'package:chess_app/stores/theme/theme_store.dart';
-import 'package:chess_app/utils/locale/app_localization.dart';
-import 'package:chess_app/widgets/progress_indicator_widget.dart';
+import 'package:chess/data/sharedpref/constants/preferences.dart';
+import 'package:chess/stores/language/language_store.dart';
+import 'package:chess/stores/post/post_store.dart';
+import 'package:chess/stores/theme/theme_store.dart';
+import 'package:chess/utils/locale/app_localization.dart';
+import 'package:chess/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utils/Navigation/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -192,51 +193,53 @@ class _HomeScreenState extends State<HomeScreen> {
     return SizedBox.shrink();
   }
 
-_buildLanguageDialog() {
-  _showDialog<String>(
-    context: context,
-    child: MaterialDialog(
-      borderRadius: 5.0,
-      enableFullWidth: true,
-      title: Text(
-        AppLocalizations.of(context).translate('home_tv_choose_language'),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
+  _buildLanguageDialog() {
+    _showDialog<String>(
+      context: context,
+      child: MaterialDialog(
+        borderRadius: 5.0,
+        enableFullWidth: true,
+        title: Text(
+          AppLocalizations.of(context).translate('home_tv_choose_language'),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+          ),
         ),
-      ),
-      headerColor: Theme.of(context).primaryColor,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      closeButtonColor: Colors.white,
-      enableCloseButton: true,
-      enableBackButton: false,
-      onCloseButtonClicked: () {
-        Navigator.of(context).pop();
-      },
-      children: _languageStore.supportedLanguages
-          .map(
-            (object) => ListTile(
-              dense: true,
-              contentPadding: EdgeInsets.all(0.0),
-              title: Text(
-                object.language!,
-                style: TextStyle(
-                  color: _languageStore.locale == object.locale
-                      ? Theme.of(context).primaryColor
-                      : _themeStore.darkMode ? Colors.white : Colors.black,
+        headerColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        closeButtonColor: Colors.white,
+        enableCloseButton: true,
+        enableBackButton: false,
+        onCloseButtonClicked: () {
+          Navigator.of(context).pop();
+        },
+        children: _languageStore.supportedLanguages
+            .map(
+              (object) => ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.all(0.0),
+                title: Text(
+                  object.language!,
+                  style: TextStyle(
+                    color: _languageStore.locale == object.locale
+                        ? Theme.of(context).primaryColor
+                        : _themeStore.darkMode
+                            ? Colors.white
+                            : Colors.black,
+                  ),
                 ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  // change user language based on selected locale
+                  _languageStore.changeLanguage(object.locale!);
+                },
               ),
-              onTap: () {
-                Navigator.of(context).pop();
-                // change user language based on selected locale
-                _languageStore.changeLanguage(object.locale!);
-              },
-            ),
-          )
-          .toList(),
-    ),
-  );
-}
+            )
+            .toList(),
+      ),
+    );
+  }
 
   _showDialog<T>({required BuildContext context, required Widget child}) {
     showDialog<T>(

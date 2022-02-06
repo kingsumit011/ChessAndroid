@@ -1,4 +1,5 @@
 class Assets {
+  //private Constructor
   Assets._();
 
   // splash screen assets
@@ -6,5 +7,4 @@ class Assets {
 
   // login screen assets
   static const String carBackground = "assets/images/img_login.jpg";
-
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:chess_app/data/network/constants/endpoints.dart';
+import 'package:chess/data/network/constants/endpoints.dart';
 import 'package:http/http.dart' as http;
 
 import 'exceptions/network_exceptions.dart';

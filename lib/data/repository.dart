@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:chess_app/data/local/datasources/post/post_datasource.dart';
-import 'package:chess_app/data/sharedpref/shared_preference_helper.dart';
-import 'package:chess_app/models/post/post.dart';
-import 'package:chess_app/models/post/post_list.dart';
+import 'package:chess/data/local/datasources/post/post_datasource.dart';
+import 'package:chess/data/sharedpref/shared_preference_helper.dart';
+import 'package:chess/models/post/post.dart';
+import 'package:chess/models/post/post_list.dart';
 import 'package:sembast/sembast.dart';
 
 import 'local/constants/db_constants.dart';
@@ -66,10 +66,9 @@ class Repository {
       .then((id) => id)
       .catchError((error) => throw error);
 
-
   // Login:---------------------------------------------------------------------
   Future<bool> login(String email, String password) async {
-    return await Future.delayed(Duration(seconds: 2), ()=> true);
+    return await Future.delayed(Duration(seconds: 2), () => true);
   }
 
   Future<void> saveIsLoggedIn(bool value) =>

@@ -1,5 +1,5 @@
-import 'package:chess_app/constants/colors.dart';
-import 'package:chess_app/constants/font_family.dart';
+import 'package:chess/constants/colors.dart';
+import 'package:chess/constants/font_family.dart';
 /**
  * Creating custom color palettes is part of creating a custom app. The idea is to create
  * your class of custom colors, in this case `CompanyColors` and then create a `ThemeData`
@@ -22,18 +22,17 @@ import 'package:chess_app/constants/font_family.dart';
  * `import` this file in your project, anywhere you needed it.
  * `import 'path/to/theme.dart';`
  */
-
 import 'package:flutter/material.dart';
 
-final ThemeData themeData = new ThemeData(
+final ThemeData themeData = ThemeData(
     fontFamily: FontFamily.productSans,
     brightness: Brightness.light,
-    primarySwatch: MaterialColor(AppColors.orange[500]!.value, AppColors.orange),
+    primarySwatch:
+        MaterialColor(AppColors.orange[500]!.value, AppColors.orange),
     primaryColor: AppColors.orange[500],
     primaryColorBrightness: Brightness.light,
     accentColor: AppColors.orange[500],
-    accentColorBrightness: Brightness.light
-);
+    accentColorBrightness: Brightness.light);
 
 final ThemeData themeDataDark = ThemeData(
   fontFamily: FontFamily.productSans,

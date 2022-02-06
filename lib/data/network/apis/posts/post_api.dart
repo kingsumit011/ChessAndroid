@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:chess_app/data/network/constants/endpoints.dart';
-import 'package:chess_app/data/network/dio_client.dart';
-import 'package:chess_app/data/network/rest_client.dart';
-import 'package:chess_app/models/post/post_list.dart';
+import 'package:chess/data/network/constants/endpoints.dart';
+import 'package:chess/data/network/dio_client.dart';
+import 'package:chess/data/network/rest_client.dart';
+import 'package:chess/models/post/post_list.dart';
 
 class PostApi {
   // dio instance
@@ -26,7 +26,7 @@ class PostApi {
     }
   }
 
-/// sample api call with default rest client
+  /// sample api call with default rest client
 //  Future<PostsList> getPosts() {
 //
 //    return _restClient

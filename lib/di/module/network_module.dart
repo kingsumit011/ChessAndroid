@@ -1,5 +1,5 @@
-import 'package:chess_app/data/network/constants/endpoints.dart';
-import 'package:chess_app/data/sharedpref/shared_preference_helper.dart';
+import 'package:chess/data/network/constants/endpoints.dart';
+import 'package:chess/data/sharedpref/shared_preference_helper.dart';
 import 'package:dio/dio.dart';
 
 abstract class NetworkModule {

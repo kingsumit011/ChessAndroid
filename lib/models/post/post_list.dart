@@ -1,4 +1,4 @@
-import 'package:chess_app/models/post/post.dart';
+import 'package:chess/models/post/post.dart';
 
 class PostList {
   final List<Post>? posts;

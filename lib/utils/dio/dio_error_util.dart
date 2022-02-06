@@ -14,14 +14,14 @@ class DioErrorUtil {
           break;
         case DioErrorType.other:
           errorDescription =
-          "Connection to API server failed due to internet connection";
+              "Connection to API server failed due to internet connection";
           break;
         case DioErrorType.receiveTimeout:
           errorDescription = "Receive timeout in connection with API server";
           break;
         case DioErrorType.response:
           errorDescription =
-          "Received invalid status code: ${error.response?.statusCode}";
+              "Received invalid status code: ${error.response?.statusCode}";
           break;
         case DioErrorType.sendTimeout:
           errorDescription = "Send timeout in connection with API server";

@@ -1,6 +1,6 @@
-import 'package:chess_app/ui/home/home.dart';
-import 'package:chess_app/ui/login/login.dart';
-import 'package:chess_app/ui/splash/splash.dart';
+import 'package:chess/ui/home/home.dart';
+import 'package:chess/ui/login/login.dart';
+import 'package:chess/ui/splash/splash.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -17,6 +17,3 @@ class Routes {
     home: (BuildContext context) => HomeScreen(),
   };
 }
-
-
-

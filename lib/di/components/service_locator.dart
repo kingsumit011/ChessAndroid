@@ -1,18 +1,17 @@
-
-import 'package:chess_app/data/local/datasources/post/post_datasource.dart';
-import 'package:chess_app/data/network/apis/posts/post_api.dart';
-import 'package:chess_app/data/network/dio_client.dart';
-import 'package:chess_app/data/network/rest_client.dart';
-import 'package:chess_app/data/repository.dart';
-import 'package:chess_app/data/sharedpref/shared_preference_helper.dart';
-import 'package:chess_app/di/module/local_module.dart';
-import 'package:chess_app/di/module/network_module.dart';
-import 'package:chess_app/stores/error/error_store.dart';
-import 'package:chess_app/stores/form/form_store.dart';
-import 'package:chess_app/stores/language/language_store.dart';
-import 'package:chess_app/stores/post/post_store.dart';
-import 'package:chess_app/stores/theme/theme_store.dart';
-import 'package:chess_app/stores/user/user_store.dart';
+import 'package:chess/data/local/datasources/post/post_datasource.dart';
+import 'package:chess/data/network/apis/posts/post_api.dart';
+import 'package:chess/data/network/dio_client.dart';
+import 'package:chess/data/network/rest_client.dart';
+import 'package:chess/data/repository.dart';
+import 'package:chess/data/sharedpref/shared_preference_helper.dart';
+import 'package:chess/di/module/local_module.dart';
+import 'package:chess/di/module/network_module.dart';
+import 'package:chess/stores/error/error_store.dart';
+import 'package:chess/stores/form/form_store.dart';
+import 'package:chess/stores/language/language_store.dart';
+import 'package:chess/stores/post/post_store.dart';
+import 'package:chess/stores/theme/theme_store.dart';
+import 'package:chess/stores/user/user_store.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sembast/sembast.dart';
@@ -27,11 +26,14 @@ Future<void> setupLocator() async {
 
   // async singletons:----------------------------------------------------------
   getIt.registerSingletonAsync<Database>(() => LocalModule.provideDatabase());
-  getIt.registerSingletonAsync<SharedPreferences>(() => LocalModule.provideSharedPreferences());
+  getIt.registerSingletonAsync<SharedPreferences>(
+      () => LocalModule.provideSharedPreferences());
 
   // singletons:----------------------------------------------------------------
-  getIt.registerSingleton(SharedPreferenceHelper(await getIt.getAsync<SharedPreferences>()));
-  getIt.registerSingleton<Dio>(NetworkModule.provideDio(getIt<SharedPreferenceHelper>()));
+  getIt.registerSingleton(
+      SharedPreferenceHelper(await getIt.getAsync<SharedPreferences>()));
+  getIt.registerSingleton<Dio>(
+      NetworkModule.provideDio(getIt<SharedPreferenceHelper>()));
   getIt.registerSingleton(DioClient(getIt<Dio>()));
   getIt.registerSingleton(RestClient());
 

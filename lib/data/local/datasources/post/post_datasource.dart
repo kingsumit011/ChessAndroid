@@ -1,6 +1,6 @@
-import 'package:chess_app/data/local/constants/db_constants.dart';
-import 'package:chess_app/models/post/post.dart';
-import 'package:chess_app/models/post/post_list.dart';
+import 'package:chess/data/local/constants/db_constants.dart';
+import 'package:chess/models/post/post.dart';
+import 'package:chess/models/post/post_list.dart';
 import 'package:sembast/sembast.dart';
 
 class PostDataSource {
@@ -48,7 +48,6 @@ class PostDataSource {
   }
 
   Future<PostList> getPostsFromDb() async {
-
     print('Loading from database');
 
     // post list
@@ -60,14 +59,14 @@ class PostDataSource {
     );
 
     // Making a List<Post> out of List<RecordSnapshot>
-    if(recordSnapshots.length > 0) {
+    if (recordSnapshots.length > 0) {
       postsList = PostList(
           posts: recordSnapshots.map((snapshot) {
-            final post = Post.fromMap(snapshot.value);
-            // An ID is a key of a record from the database.
-            post.id = snapshot.key;
-            return post;
-          }).toList());
+        final post = Post.fromMap(snapshot.value);
+        // An ID is a key of a record from the database.
+        post.id = snapshot.key;
+        return post;
+      }).toList());
     }
 
     return postsList;
@@ -97,5 +96,4 @@ class PostDataSource {
       _db,
     );
   }
-
 }

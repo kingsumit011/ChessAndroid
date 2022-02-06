@@ -1,20 +1,23 @@
 import 'package:another_flushbar/flushbar_helper.dart';
-import 'package:chess_app/constants/assets.dart';
-import 'package:chess_app/data/sharedpref/constants/preferences.dart';
-import 'package:chess_app/utils/routes/routes.dart';
-import 'package:chess_app/stores/form/form_store.dart';
-import 'package:chess_app/stores/theme/theme_store.dart';
-import 'package:chess_app/utils/device/device_utils.dart';
-import 'package:chess_app/utils/locale/app_localization.dart';
-import 'package:chess_app/widgets/app_icon_widget.dart';
-import 'package:chess_app/widgets/empty_app_bar_widget.dart';
-import 'package:chess_app/widgets/progress_indicator_widget.dart';
-import 'package:chess_app/widgets/rounded_button_widget.dart';
-import 'package:chess_app/widgets/textfield_widget.dart';
+import 'package:chess/constants/assets.dart';
+import 'package:chess/data/sharedpref/constants/preferences.dart';
+import 'package:chess/stores/form/form_store.dart';
+import 'package:chess/stores/theme/theme_store.dart';
+import 'package:chess/utils/device/device_utils.dart';
+import 'package:chess/utils/locale/app_localization.dart';
+import 'package:chess/widgets/app_icon_widget.dart';
+import 'package:chess/widgets/empty_app_bar_widget.dart';
+import 'package:chess/widgets/progress_indicator_widget.dart';
+import 'package:chess/widgets/rounded_button_widget.dart';
+import 'package:chess/widgets/textfield_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utils/Navigation/routes.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -86,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (context) {
               return Visibility(
                 visible: _store.loading,
-                child: CustomProgressIndicatorWidget(),
+                child: const CustomProgressIndicatorWidget(),
               );
             },
           )
@@ -113,11 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            AppIconWidget(image: 'assets/icons/ic_appicon.png'),
-            SizedBox(height: 24.0),
-            _buildUserIdField(),
-            _buildPasswordField(),
-            _buildForgotPasswordButton(),
+            const AppIconWidget(image: 'assets/icons/ic_appicon.png'),
+            const SizedBox(height: 24.0),
             _buildSignInButton()
           ],
         ),
@@ -188,17 +188,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignInButton() {
     return RoundedButtonWidget(
-      buttonText: AppLocalizations.of(context).translate('login_btn_sign_in'),
+      // buttonText: AppLocalizations.of(context).translate('Google Sign In'),
+      buttonText: 'Google Sign In',
       buttonColor: Colors.orangeAccent,
       textColor: Colors.white,
-      onPressed: () async {
-        if (_store.canLogin) {
-          DeviceUtils.hideKeyboard(context);
-          _store.login();
-        } else {
-          _showErrorMessage('Please fill in all fields');
-        }
-      },
+      // onPressed: () async {
+      //   if (_store.canLogin) {
+      //     DeviceUtils.hideKeyboard(context);
+      //     _store.login();
+      //   } else {
+      //     _showErrorMessage('Please fill in all fields');
+      //   }
+      // },
+      onPressed: () => firebaseLogin(),
     );
   }
 
@@ -207,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
       prefs.setBool(Preferences.is_logged_in, true);
     });
 
-    Future.delayed(Duration(milliseconds: 0), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       Navigator.of(context).pushNamedAndRemoveUntil(
           Routes.home, (Route<dynamic> route) => false);
     });
@@ -218,13 +220,13 @@ class _LoginScreenState extends State<LoginScreen> {
   // General Methods:-----------------------------------------------------------
   _showErrorMessage(String message) {
     if (message.isNotEmpty) {
-      Future.delayed(Duration(milliseconds: 0), () {
+      Future.delayed(const Duration(milliseconds: 0), () {
         if (message.isNotEmpty) {
           FlushbarHelper.createError(
             message: message,
             title: AppLocalizations.of(context).translate('home_tv_error'),
-            duration: Duration(seconds: 3),
-          )..show(context);
+            duration: const Duration(seconds: 3),
+          ).show(context);
         }
       });
     }
@@ -240,5 +242,24 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
     _passwordFocusNode.dispose();
     super.dispose();
+  }
+
+  //Firebase Google Login:-------------------------------------------------------------
+  Future<void> firebaseLogin() async {
+    final _googleSignIn = GoogleSignIn();
+    final _firebaseAuth = FirebaseAuth.instance;
+    try {
+      final googleSignInAccount = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      await _firebaseAuth.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      rethrow;
+    }
   }
 }

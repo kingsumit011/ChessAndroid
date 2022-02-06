@@ -1,6 +1,6 @@
-import 'package:chess_app/data/repository.dart';
-import 'package:chess_app/models/language/Language.dart';
-import 'package:chess_app/stores/error/error_store.dart';
+import 'package:chess/data/repository.dart';
+import 'package:chess/models/language/Language.dart';
+import 'package:chess/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
 
 part 'language_store.g.dart';
@@ -24,8 +24,7 @@ abstract class _LanguageStore with Store {
   ];
 
   // constructor:---------------------------------------------------------------
-  _LanguageStore(Repository repository)
-      : this._repository = repository {
+  _LanguageStore(Repository repository) : this._repository = repository {
     init();
   }
 
@@ -70,7 +69,7 @@ abstract class _LanguageStore with Store {
   // general:-------------------------------------------------------------------
   void init() async {
     // getting current language from shared preference
-    if(_repository.currentLanguage != null) {
+    if (_repository.currentLanguage != null) {
       _locale = _repository.currentLanguage!;
     }
   }

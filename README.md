@@ -1,26 +1,7 @@
-# ChessAndroid
-Chess FrontEnd Android 
+# chess
 
-## Boilerplate Features:
+Chess Project 
 
-* Splash
-* Login
-* Home
-* Routing
-* Theme
-* Dio
-* Database
-* MobX (to connect the reactive data of your application with the UI)
-* Provider (State Management)
-* Encryption
-* Validation
-* Code Generation
-* User Notifications
-* Logging
-* Dependency Injection
-* Dark Theme Support
-* Multilingual Support
-* Provider example
 
 ### Libraries & Tools Used
 
@@ -81,3 +62,17 @@ In Visual Studio Code, navigate to `Preferences` -> `Settings` and search for `F
 **/*.inject.dart
 **/*.g.dart
 ```
+
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials, samples, guidance on
+mobile development, and a full API reference.
